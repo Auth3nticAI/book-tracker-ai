@@ -29,12 +29,14 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Book Tracker API", version="4.0.0 (Agent)")
 
+# Allowed browser origins. Defaults to local dev; in production set
+# ALLOWED_ORIGINS to your deployed frontend URL(s), comma-separated.
+_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+ALLOWED_ORIGINS = [o.strip() for o in _origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
