@@ -1,5 +1,7 @@
 # Book Tracker AI
 
+![CI](https://github.com/Auth3nticAI/book-tracker-ai/actions/workflows/ci.yml/badge.svg)
+
 > A reading journal that turns your library into a queryable knowledge base. Track what you've read, capture page-anchored notes, get Claude-powered recommendations grounded in your actual ratings, and hand the whole library to a tool-use agent that can search, add, update, and delete on your behalf.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat&logo=nextdotjs)
