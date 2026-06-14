@@ -53,6 +53,26 @@ docker compose up --build
 - Frontend → http://localhost:3000
 - Backend (Swagger) → http://localhost:8000/docs
 
+## Measurements
+
+Captured on a single laptop (rootless Docker, 4-core / 16 GB), all three containers warm. `ab`-style means over 5 sequential requests unless noted.
+
+| Endpoint | Latency (warm) | Notes |
+|---|---|---|
+| `GET /health` | **~2.3 ms** | First request 23 ms (cold), drops to ~2 ms by request 2 |
+| `GET /books` (10 rows) | **~3.5 ms** | SQLAlchemy + psycopg2 over Docker bridge network |
+| `POST /ai/recommend` | **~4.7 s** | Dominated by Claude API; library context ~400 input tokens |
+| `POST /ai/agent` (1 tool call) | **~4.0 s** | One round-trip to Claude + one Postgres tool call |
+| `POST /ai/agent` (2 tool calls) | **~4.6 s** | `get_books` → `update_book_status`, two Claude round-trips |
+| Backend image | **302 MB** | python:3.11-slim base + libpq + Python deps |
+| Frontend image | **269 MB** | Multi-stage build, Next.js standalone output |
+| Cold-to-healthy | **~12 s** | `docker compose up` from a clean stop to all healthy |
+
+Takeaways:
+- Local HTTP layer is fast; the AI endpoints are bottlenecked by Claude API round-trip time, not by my stack.
+- Multi-step agent latency is roughly `(tool_calls + 1) × Claude RTT` — predictable enough to budget against.
+- The standalone Next.js runtime image saves ~400 MB over the default `node:20-alpine + .next` approach.
+
 ## Demo flow (what to show in 3 minutes)
 
 1. Add a book, mark it read, rate it 5/5
