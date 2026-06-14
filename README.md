@@ -1,12 +1,12 @@
-# Book Tracker — Capstone
+# Book Tracker — Week 7 Lab
 
 A full-stack AI book journal. Track what you've read, capture quotes and reactions while you read, get AI-driven recommendations grounded in your library, and run a Claude agent that can manage your collection through natural language.
 
 **Stack:** Next.js (App Router) + Tailwind frontend · FastAPI + SQLAlchemy backend · PostgreSQL 16 · Claude API. Everything containerised. One command to run the whole thing: `docker compose up --build`.
 
-CSE552 Capstone — built on the Week 4–6 labs and extended with a second model (notes), a second AI endpoint (notes synthesis), and a Docker Compose deployment.
+CSE552 Week 7 Lab — built on the Week 4–6 labs and extended with a second model (notes), a second AI endpoint (notes synthesis), and a Docker Compose deployment.
 
-## Capstone description (for the submission portal)
+## Project description (for the submission portal)
 
 > Book Tracker is an AI-powered reading journal that helps deliberate readers turn their library into a usable knowledge base. Users CRUD books, capture notes (quotes, page numbers, reactions) tied to each book, get Claude-powered recommendations that cite their actual ratings and currently-reading list, and converse with an AI agent that can search, add, update, and delete books on their behalf. The "AI synthesis" feature pulls a single book's notes into a structured summary so the reader can revisit what they got out of the book without re-reading it.
 
@@ -69,7 +69,7 @@ After `docker compose up --build`:
 ## Code layout
 
 ```
-capstone/
+week-07-lab/
 ├── docker-compose.yml         # wires db + backend + frontend
 ├── backend/
 │   ├── Dockerfile             # python:3.11-slim runtime
